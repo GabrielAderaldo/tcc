@@ -11,10 +11,35 @@ enum HomePageState{
   error
 }
 
-class HomeViewModel extends ChangeNotifier{
+enum RadiuValue{
+  M,F
+}
 
+class HomeViewModel extends ChangeNotifier{
+  
+  final stateList = [
+    "Ceará","São Paulo","Rio de Janeiro","Pernambuco"
+  ];
+
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController socialNameController = TextEditingController();
+  TextEditingController motherNameController = TextEditingController();
+  TextEditingController cpfController = TextEditingController();
+  TextEditingController nisController = TextEditingController();
+  TextEditingController diagnosisController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+
+  String _stateDropDownValue = "";
+  String get stateDropDownValue => _stateDropDownValue;
+
+  RadiuValue _radiuValue = RadiuValue.M;
+  RadiuValue get radiuValue => _radiuValue;
+  
   HomePageState _state = HomePageState.idle;
   HomePageState get state => _state;
+
+  int _currentPageIndex = 0;
+  int get currentPageIndex => _currentPageIndex;
 
   String _errorMessage = "";
   String get errorMessage => _errorMessage;
@@ -23,6 +48,21 @@ class HomeViewModel extends ChangeNotifier{
   List<ReferencePerson> get referencePersonList => _referencePersonList;
 
   final HomeService _service = HomeService();
+
+  void setRadiuValue({required RadiuValue newRadiuValue}){
+    _radiuValue = newRadiuValue;
+    notifyListeners();
+  }
+
+  void setDropDownValue({required String newDropDownValue}){
+    _stateDropDownValue = newDropDownValue;
+    notifyListeners();
+  }
+
+  void setCurrentPageIndex({required int newIndex}){
+    _currentPageIndex = newIndex;
+    notifyListeners();
+  }
 
   void setHomePageState({required HomePageState state}){
     _state = state;
@@ -39,10 +79,15 @@ class HomeViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
-  void goToEspecificationScreen({required int index,required BuildContext ctx}){
+  void goToEspecificationScreen({required int index,required BuildContext ctx,required ReferencePerson referencePerson}){
     Navigator.of(ctx).push(
-      MaterialPageRoute(builder: (context) => EspecificationPage(index: index))
+      MaterialPageRoute(builder: (context) => EspecificationPage(index: index,referencePerson: referencePerson))
     );
+  }
+
+
+  void printInformations(){
+    print("${radiuValue.name} e $stateDropDownValue");
   }
 
   Future<void> getReferencePersonList() async {
