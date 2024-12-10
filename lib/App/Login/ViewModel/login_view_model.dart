@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:tcc/App/Home/home_page.dart';
+import 'package:tcc/App/Home/View/home_page.dart';
 import 'package:tcc/App/Login/Service/login_service.dart';
 
 
@@ -40,7 +40,7 @@ class LoginViewModel extends ChangeNotifier{
   }
 
   void goToHome({required BuildContext ctx}){
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (BuildContext context)=> HomePage()));
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (BuildContext context)=> const HomePage()));
   }
 
   void login() async {

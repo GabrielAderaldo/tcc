@@ -1,18 +1,21 @@
 class User {
 
-  final String? name;
+  final int? id;
+  final String? fullName;
   final String? email;
-  final String? registry;
-  final int? age;
-  final String? type;
-  final String? id;
+  final String? crm;
+  final String? role;
+  final bool? isActive;
 
-  User({required this.name, required this.email, required this.registry, required this.age, required this.type, required this.id});
+  User({required this.id,required this.fullName,required this.email,required this.crm,required this.role, required this.isActive});
 
 
   factory User.fromJson(Map<String,dynamic> json){
-    final user = json['user'];
-    return User(name: user['admName'], email: user['admEmail'], registry: user['registry'], age: user['admAge'], type: user['admType'], id: user['id']);
+   
+    if(json['crm'] == null){
+      return User(id: json['id'], fullName: json['fullName'], email: json['email'], crm: "null", role: json['role'], isActive: json['isActive']);
+    }
+    return User(id: json['id'], fullName: json['fullName'], email: json['email'], crm: json['crm'], role: json['role'], isActive: json['isActive']);
   }
 
 }
