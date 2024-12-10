@@ -87,9 +87,7 @@ class HomeViewModel extends ChangeNotifier{
   }
 
 
-  void printInformations(){
-    print("${radiuValue.name} e $stateDropDownValue");
-  }
+  
 
    void resetScreen(){
     _errorMessage = "";
