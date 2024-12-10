@@ -12,7 +12,8 @@ enum HomePageState{
 }
 
 enum RadiuValue{
-  M,F
+  Masculino,
+  Feminino
 }
 
 class HomeViewModel extends ChangeNotifier{
@@ -32,7 +33,7 @@ class HomeViewModel extends ChangeNotifier{
   String _stateDropDownValue = "";
   String get stateDropDownValue => _stateDropDownValue;
 
-  RadiuValue _radiuValue = RadiuValue.M;
+  RadiuValue _radiuValue = RadiuValue.Masculino;
   RadiuValue get radiuValue => _radiuValue;
   
   HomePageState _state = HomePageState.idle;
@@ -88,6 +89,45 @@ class HomeViewModel extends ChangeNotifier{
 
   void printInformations(){
     print("${radiuValue.name} e $stateDropDownValue");
+  }
+
+   void resetScreen(){
+    _errorMessage = "";
+    setHomePageState(state: HomePageState.idle);
+  }
+
+  Future<void> createReferencePerson() async {
+    try{
+      final _ = _service.createReferencePerson(fullName: fullNameController.text,
+      socialName: socialNameController.text,
+      motherName: socialNameController.text,
+      cpf: cpfController.text,
+      nis: nisController.text,
+      diagnosis: diagnosisController.text,
+      rgNumber: "00000",
+      rgUf: "rgUf",
+      rgIssue: "rgIssue",
+      rgDateIssue: "rgDateIssue",
+      isShelter: false,
+      localLocalization: "localLocalization",
+      cep: "cep",
+      adress: "adress",
+      adressNumber: "adressNumber",
+      adressComoplement: "adressComoplement",
+      state: stateDropDownValue,
+      city: "city",
+      phone: "phone",
+      whoIsObservingId: "whoIsObservingId",
+      biologicalGender: radiuValue.name,
+      birthDate: "birthDate"
+      );
+      setHomePageState(state: HomePageState.sucess);
+    }catch(err){
+      final error = err as DioException;
+      if(error.message == null) setErrorMessage(err: "Error desconhecido");
+      setErrorMessage(err: error.message!);
+      setHomePageState(state: HomePageState.error);
+    }
   }
 
   Future<void> getReferencePersonList() async {

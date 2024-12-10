@@ -4,10 +4,13 @@ import 'package:tcc/App/infra/dio/dio_dto.dart';
 
 class HomeService implements HomeRepository{
   @override
-  Future<ReferencePerson> createReferencePerson({required ReferencePerson referencePerson}) async {
-   
-
-    throw UnimplementedError();
+  Future<bool> createReferencePerson({required String fullName,required String socialName, required String motherName,required String cpf,required String nis, required String diagnosis,required String rgNumber, required String rgUf,required String rgIssue, required String rgDateIssue, required bool isShelter, required String localLocalization, required String cep, required String adress, required String adressNumber, required String adressComoplement, required String state, required String city, required String phone, required String whoIsObservingId, required String biologicalGender, required String birthDate}) async {
+    try{
+      final responseMap = await dioCreateReferencePerson(fullName: fullName, socialName: socialName, motherName: motherName, cpf: cpf, nis: nis, diagnosis: diagnosis, rgNumber: rgNumber, rgUf: rgUf, rgIssue: rgIssue, rgDateIssue: rgDateIssue, isShelter: isShelter, localLocalization: localLocalization, cep: cep, adress: adress, neighborhood: "neighborhood", adressNumber: adressNumber, adressComoplement: adressComoplement, state: state, city: city, phone: phone, whoIsObservingId: whoIsObservingId, biologicalGender: biologicalGender, birthDate: birthDate);
+      return true;
+    }catch(err){
+      rethrow;
+    }
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tcc/App/Home/View/component/add_reference_person_component.dart';
 import 'package:tcc/App/Home/View/component/list_reference_person_component.dart';
 import 'package:tcc/App/Home/ViewModel/home_view_model.dart';
 
@@ -25,76 +26,37 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _homeViewModel.currentPageIndex == 0 ? ListReferencePersonComponent(homeViewModel: _homeViewModel) :
-      ListView(
-        children: <Widget>[
-          TextField(
-            controller: _homeViewModel.fullNameController,
-            decoration: const InputDecoration(
-              label: Text('Nome Completo'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.socialNameController,
-            decoration: const InputDecoration(
-              label: Text('Nome social'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.motherNameController,
-            decoration: const InputDecoration(
-              label: Text('Nome da mãe'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.cpfController,
-            decoration: const InputDecoration(
-              label: Text('cpf'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.nisController,
-            decoration: const InputDecoration(
-              label: Text('nis'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.diagnosisController,
-            decoration: const InputDecoration(
-              label: Text('Diagnostico'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          TextField(
-            controller: _homeViewModel.cityController,
-            decoration: const InputDecoration(
-              label: Text('Cidade'),
-              border: OutlineInputBorder(),
-            ),
-          ),
-          DropdownMenu(
-            onSelected: (String? value) => _homeViewModel.setDropDownValue(newDropDownValue: value!),
-            initialSelection: _homeViewModel.stateList.first,
-            dropdownMenuEntries: _homeViewModel.stateList.map((e)=> DropdownMenuEntry(value: e, label: e)).toList()
-            ),
-            Row(
+      body: switch(_homeViewModel.state){
+        
+        // TODO: Handle this case.
+        HomePageState.idle => _homeViewModel.currentPageIndex == 0 ? ListReferencePersonComponent(homeViewModel: _homeViewModel) : AddReferencePersonComponent(homeViewModel: _homeViewModel),
+        // TODO: Handle this case.
+        HomePageState.sucess => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(child: ListTile(leading: const Text("Masculino"),trailing: Radio(value: RadiuValue.M, groupValue: _homeViewModel.radiuValue, onChanged: (value)=> _homeViewModel.setRadiuValue(newRadiuValue: value!)))),
-              Expanded(child: ListTile(leading: const Text("Feminino"),trailing: Radio(value: RadiuValue.F, groupValue: _homeViewModel.radiuValue, onChanged: (value)=> _homeViewModel.setRadiuValue(newRadiuValue: value!))))
+              const Text("Pessoa de referencia criada com sucesso!"),
+              ElevatedButton(onPressed: (){
+                _homeViewModel.resetScreen();
+              }, child: const Text("Voltar a tela de inicio"))
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton(onPressed: _homeViewModel.printInformations, child: const Text("Criar uma nova pessoa de referencia")),
+        ),
+        // TODO: Handle this case.
+        HomePageState.error => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.warning_outlined,color: Colors.red),
+              Text(_homeViewModel.errorMessage),
+              ElevatedButton(onPressed: (){
+                _homeViewModel.resetScreen();
+              }, child: const Text("Voltar a tela de inicio"))
+            ],
           )
-        ],
-      )
-      ,
+          ),
+      },
 
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (value) => _homeViewModel.setCurrentPageIndex(newIndex: value),
@@ -107,4 +69,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
