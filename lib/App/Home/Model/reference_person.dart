@@ -1,54 +1,3 @@
-/*
- {
-        "_id": "671a747f9e1df020966c3255",
-        "fullName": "Becky Bashirian",
-        "socialName": "capacitor",
-        "motherName": "Johanna O'Hara",
-        "nis": "020202022",
-        "cpf": "00906366354",
-        "diagnosis": "Gigantismo",
-        "rg": {
-            "issueDate": "2005",
-            "issuingBody": "SSP",
-            "number": "20055151777",
-            "uf": "CE",
-            "_id": "671a747f9e1df020966c3256"
-        },
-        "isShelter": false,
-        "localLocalization": "URBAN",
-        "cep": "60010102",
-        "adress": "Avenida Avenida",
-        "neighborhood": "Bairroh",
-        "adressComplement": "Complementoh",
-        "adressNumber": "Numeroh",
-        "city": "West Ike",
-        "phone": "491-441-9068",
-        "state": "CE",
-        "familyPhoto": "671a747d9e1df020966c3248",
-        "whoIsOpeningId": "744",
-        "fistEntryInUnityId": "671a747e9e1df020966c324e",
-        "familyCompositionId": "671a747e9e1df020966c324a",
-        "homeConditionsId": "671a747e9e1df020966c3251",
-        "workConditionId": "671a747e9e1df020966c3253",
-        "birthDate": "2023-12-08T21:54:13.000Z",
-        "biologicalGender": "Feminino",
-        "observations": [
-            {
-                "observation": "A primeira observação da pessoa de referência 3",
-                "whoIsObservingId": "61",
-                "createdAt": "2024-10-24T16:24:55.263Z",
-                "updatedAt": "2024-10-24T16:24:55.263Z",
-                "_id": "671a74d79e1df020966c325a"
-            }
-        ],
-        "createdAt": "2024-10-24T16:23:27.027Z",
-        "updatedAt": "2024-10-24T16:23:27.027Z",
-        "__v": 1
-    },
-
-*/
-
-
 import 'package:tcc/App/Home/Model/observations.dart';
 import 'package:tcc/App/Home/Model/rg.dart';
 
@@ -88,11 +37,8 @@ class ReferencePerson {
     
     final rg = Rg.fromJson(json['rg']);
     final observationListJson = json['observations'] as List;
-
     final observationList = observationListJson.map((e)=> Observation.fromJson(e));
     
-
-
     return ReferencePerson(
       id: json['_id'], 
       fullName: json['fullName'], 
